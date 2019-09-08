@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button showMoney;
     private Button showTag;
+    private Button newButton;
     private TextView moneyText;
     private TextView winningText;
     private int moneyCounter = 0;
@@ -23,27 +25,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        showMoney = findViewById(R.id.button_make_rain);
-        showTag = findViewById(R.id.button_show_tag);
-        moneyText = findViewById(R.id.money_text);
-        winningText = findViewById(R.id.winning_text);
+        setContentView(R.layout.second_layout);
+        newButton = findViewById(R.id.new_button);
 
 
+        newButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(R.layout.activity_main);
+                showMoney = findViewById(R.id.button_make_rain);
+                showTag = findViewById(R.id.button_show_tag);
+                moneyText = findViewById(R.id.money_text);
+                winningText = findViewById(R.id.winning_text);
+            }
 
-//        showMoney.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-//
-//        showTag.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+
+        });
+
     }
 
     public void showTag(View v){
@@ -53,13 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void makeItRain(View v){
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+
         moneyCounter += 1000;
-        if(moneyCounter < 21000) {
-            moneyText.setText(String.valueOf(numberFormat.format(moneyCounter)));
-        } else {
-            moneyText.setTextColor(Color.WHITE);
-            winningText.setText(R.string.winner);
-            moneyText.setText(String.valueOf(numberFormat.format(moneyCounter)));
+        moneyText.setText(numberFormat.format(moneyCounter));
+        /*
+          Example of getting color using getResources()
+          moneyText.setTextColor(getResources().getColor(R.color.myColor));
+         */
+
+        switch (moneyCounter){
+            case 20000:
+                moneyText.setTextColor(Color.BLACK);
+                break;
+            case 40000:
+                moneyText.setTextColor(Color.YELLOW);
+                break;
+            case 60000:
+                moneyText.setTextColor(Color.GREEN);
+                winningText.setText(R.string.winner);
+                break;
+            default:
+                break;
         }
         Log.d("MYTAG", "onClick: Show Money" + moneyCounter);
     }

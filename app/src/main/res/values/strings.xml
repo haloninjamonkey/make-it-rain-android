@@ -5,4 +5,5 @@
     <string name="button">Make it rain</string>
     <string name="show_tag">Show Tag</string>
     <string name="winner">You\'re rich!!!</string>
+    <string name="say_something">Say Something</string>
 </resources>
